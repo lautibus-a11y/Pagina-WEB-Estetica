@@ -7,6 +7,7 @@
     <title>GS Estetica Integral | Cuidamos tu piel</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -28,14 +29,34 @@
                     fontFamily: {
                         serif: ['Playfair Display', 'serif'],
                         sans: ['Poppins', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'sm': '0 2px 4px rgba(219, 112, 147, 0.03), 0 1px 2px rgba(0, 0, 0, 0.02)',
+                        'md': '0 6px 16px rgba(219, 112, 147, 0.05), 0 2px 4px rgba(0, 0, 0, 0.02)',
+                        'lg': '0 12px 28px rgba(219, 112, 147, 0.06), 0 4px 10px rgba(0, 0, 0, 0.03)',
+                        'xl': '0 20px 42px rgba(219, 112, 147, 0.08), 0 6px 18px rgba(0, 0, 0, 0.04)',
+                        '2xl': '0 32px 64px rgba(219, 112, 147, 0.1), 0 12px 24px rgba(0, 0, 0, 0.05)',
                     }
                 }
             }
         }
     </script>
     <style>
-        * {
-            scroll-behavior: smooth;
+        /* Lenis Smooth Scroll Configuration */
+        html.lenis {
+            height: auto;
+        }
+        .lenis-smooth {
+            scroll-behavior: auto !important;
+        }
+        .lenis-smooth [data-lenis-prevent] {
+            overscroll-behavior: contain;
+        }
+        .lenis-stopped {
+            overflow: hidden;
+        }
+        .lenis-scrolling iframe {
+            pointer-events: none;
         }
         
         body {
@@ -171,9 +192,9 @@
             z-index: 0;
         }
         .bento-icon {
-            width: 5rem;
-            height: 5rem;
-            border-radius: 1.5rem;
+            width: 6.5rem;
+            height: 6.5rem;
+            border-radius: 1.75rem;
             background: #ffffff;
             box-shadow: 0 4px 15px rgba(255, 183, 197, 0.4);
             display: flex;
@@ -184,8 +205,12 @@
             border: 1px solid rgba(255, 255, 255, 0.8);
             transition: all 0.3s ease;
         }
+        .bento-icon img {
+            width: 4.5rem;
+            height: 4.5rem;
+        }
         .bento-glass:hover .bento-icon {
-            transform: scale(1.1);
+            transform: scale(1.08);
             box-shadow: 0 8px 25px rgba(255, 183, 197, 0.6);
             background: #ffffff;
         }
@@ -739,11 +764,15 @@
 
         /* Mobile menu */
         .mobile-menu {
-            transform: translateX(100%);
-            transition: transform 0.3s ease;
+            opacity: 0;
+            transform: translateY(-10px);
+            pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.3s ease;
         }
         .mobile-menu.active {
-            transform: translateX(0);
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
         }
 
         /* Progress Bars */
@@ -1025,15 +1054,15 @@
         </nav>
         
         <!-- Mobile Menu -->
-        <div id="mobileMenu" class="mobile-menu fixed top-full left-0 right-0 bg-black/20 backdrop-blur-xl rounded-b-2xl shadow-lg lg:hidden">
-            <div class="flex flex-col p-4 gap-3">
-                <a class="text-sm font-bold text-pink-900 py-2 border-b border-pink-100 text-center" href="#services">Servicios</a>
-                <a class="text-sm font-bold text-pink-900 py-2 border-b border-pink-100 text-center" href="#promotions">Ofertas</a>
-                <a class="text-sm font-bold text-pink-900 py-2 border-b border-pink-100 text-center" href="#gallery">Galería</a>
-                <a class="text-sm font-bold text-pink-900 py-2 border-b border-pink-100 text-center" href="#team">Equipo</a>
-                <a class="text-sm font-bold text-pink-900 py-2 border-b border-pink-100 text-center" href="#about">Nosotros</a>
-                <a class="text-sm font-bold text-pink-900 py-2 border-b border-pink-100 text-center" href="#contact">Contacto</a>
-                <a href="#booking" class="mt-2 px-5 py-3 rounded-lg text-sm font-medium text-center text-white/90 border border-white/30 backdrop-blur-md bg-white/10 hover:bg-white/20 hover:border-white/50 transition-all">
+        <div id="mobileMenu" class="mobile-menu fixed top-full left-0 right-0 bg-white rounded-2xl shadow-2xl border border-pink-100/60 mt-3 lg:hidden">
+            <div class="flex flex-col p-5 gap-3">
+                <a class="text-sm font-bold text-pink-900 py-2.5 border-b border-pink-50 text-center hover:text-pink-600 transition-colors" href="#services">Servicios</a>
+                <a class="text-sm font-bold text-pink-900 py-2.5 border-b border-pink-50 text-center hover:text-pink-600 transition-colors" href="#promotions">Ofertas</a>
+                <a class="text-sm font-bold text-pink-900 py-2.5 border-b border-pink-50 text-center hover:text-pink-600 transition-colors" href="#gallery">Galería</a>
+                <a class="text-sm font-bold text-pink-900 py-2.5 border-b border-pink-50 text-center hover:text-pink-600 transition-colors" href="#team">Equipo</a>
+                <a class="text-sm font-bold text-pink-900 py-2.5 border-b border-pink-50 text-center hover:text-pink-600 transition-colors" href="#about">Nosotros</a>
+                <a class="text-sm font-bold text-pink-900 py-2.5 border-b border-pink-50 text-center hover:text-pink-600 transition-colors" href="#contact">Contacto</a>
+                <a href="#booking" class="mt-3 px-5 py-3.5 rounded-xl text-sm font-bold text-center text-white bg-pink-500 hover:bg-pink-600 shadow-lg shadow-pink-500/20 transition-all">
                     Reservar turno
                 </a>
             </div>
@@ -1085,7 +1114,7 @@
                 <div class="bento-item sr-item sr-scale" data-delay="0">
                     <div class="bento-glass">
                         <div class="bento-icon">
-                            <img src="public/img/SVG/SVG-Cosmetologia.webp" alt="Cosmetología" class="w-14 h-14 object-contain transition-transform duration-500" / loading="lazy">
+                            <img src="public/img/SVG/SVG-Cosmetologia.webp" alt="Cosmetología" class="w-14 h-14 object-contain transition-transform duration-500" loading="lazy">
                         </div>
                         <h3>Cosmetología</h3>
                         <p>Tratamientos faciales personalizados para cada tipo de piel con resultados visibles desde la primera sesión.</p>
@@ -1102,7 +1131,7 @@
                 <div class="bento-item sr-item sr-scale" data-delay="100">
                     <div class="bento-glass">
                         <div class="bento-icon">
-                            <img src="public/img/SVG/SVG-Pestanias-Cejas.webp" alt="Cejas y Pestañas" class="w-14 h-14 object-contain transition-transform duration-500" / loading="lazy">
+                            <img src="public/img/SVG/SVG-Pestanias-Cejas.webp" alt="Cejas y Pestañas" class="w-14 h-14 object-contain transition-transform duration-500" loading="lazy">
                         </div>
                         <h3>Cejas y Pestañas</h3>
                         <p>Diseño y tratamiento profesional para realzar tu mirada con técnicas de vanguardia.</p>
@@ -1119,7 +1148,7 @@
                 <div class="bento-item sr-item sr-scale" data-delay="100">
                     <div class="bento-glass">
                         <div class="bento-icon">
-                            <img src="public/img/SVG/SVG-Manicuria-Pedicuria.webp" alt="Manos y Pies" class="w-14 h-14 object-contain transition-transform duration-500" / loading="lazy">
+                            <img src="public/img/SVG/SVG-Manicuria-Pedicuria.webp" alt="Manos y Pies" class="w-14 h-14 object-contain transition-transform duration-500" loading="lazy">
                         </div>
                         <h3>Manos y Pies</h3>
                         <p>Belleza y cuidado integral para tus manos y pies con productos hipoalergénicos.</p>
@@ -1136,7 +1165,7 @@
                 <div class="bento-item sr-item sr-scale" data-delay="300">
                     <div class="bento-glass">
                         <div class="bento-icon">
-                            <img src="public/img/SVG/SVG-Bienestar-integral.webp" alt="Bienestar Integral" class="w-14 h-14 object-contain transition-transform duration-500" / loading="lazy">
+                            <img src="public/img/SVG/SVG-Bienestar-integral.webp" alt="Bienestar Integral" class="w-14 h-14 object-contain transition-transform duration-500" loading="lazy">
                         </div>
                         <h3>Bienestar Integral</h3>
                         <p>Terapias holísticas para equilibrar cuerpo y mente en un entorno de serenidad absoluta.</p>
@@ -1470,74 +1499,168 @@
         </div>
     </section>
 
-    <!-- Testimonials -->
-    <section class="py-20 sm:py-28 lg:py-32">
+    <!-- Testimonials Section (Infinite Scroll Marquee) -->
+    <style>
+        /* Infinite Testimonials Styles */
+        .testimonial-scroll-container {
+            overflow: hidden;
+            width: 100%;
+            position: relative;
+            padding: 1.5rem 0;
+            mask-image: linear-gradient(to right, transparent, white 8%, white 92%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, white 8%, white 92%, transparent);
+        }
+        .testimonial-track {
+            display: flex;
+            gap: 1.5rem;
+            width: max-content;
+            animation: testimonialScroll 45s linear infinite;
+        }
+        .testimonial-track:hover {
+            animation-play-state: paused;
+        }
+        .testimonial-card {
+            width: 310px;
+            flex-shrink: 0;
+        }
+        @media (min-width: 640px) {
+            .testimonial-card {
+                width: 360px;
+            }
+        }
+        @keyframes testimonialScroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+    </style>
+    <section class="py-20 sm:py-28 lg:py-32 bg-pink-50/30 overflow-hidden">
         <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
             <div class="text-center mb-12">
+                <span class="block text-pink-500 uppercase tracking-widest text-xs font-semibold mb-2">Reseñas</span>
                 <h2 class="headline-animated headline-wavy font-serif text-4xl sm:text-5xl lg:text-6xl tracking-tight text-pink-900 mb-3">
                     Lo que dicen nuestras clientas
                 </h2>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
-                <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-md border border-pink-100 hover:shadow-lg transition-all duration-300">
-                    <div class="flex gap-1 mb-4">
-                        <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                    </div>
-                    <p class="text-pink-700 text-sm leading-relaxed mb-5 italic">"Una experiencia increíble. La atención es sumamente profesional y los resultados en mi piel se notaron desde la primera sesión."</p>
-                    <div class="flex items-center gap-3">
-                        <div class="w-11 h-11 rounded-full bg-gradient-to-br from-pink-200 to-pink-100"></div>
-                        <div>
-                            <span class="font-semibold text-pink-800 block text-sm">Mariana López</span>
-                            <span class="text-pink-500 text-xs">Cliente frecuente</span>
+            <div class="testimonial-scroll-container">
+                <div class="testimonial-track">
+                    <!-- Card 1 -->
+                    <div class="testimonial-card bg-white rounded-3xl p-6 sm:p-8 shadow-xl shadow-pink-100/30 border border-pink-100/50 hover:shadow-2xl hover:border-pink-200/50 transition-all duration-300">
+                        <div class="flex gap-1 mb-4">
+                            <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        </div>
+                        <p class="text-pink-700 text-sm leading-relaxed mb-5 italic">"Una experiencia increíble. La atención es sumamente profesional y los resultados en mi piel se notaron desde la primera sesión."</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-pink-200 to-pink-100 flex items-center justify-center font-bold text-pink-700 text-xs shadow-inner">ML</div>
+                            <div>
+                                <span class="font-semibold text-pink-800 block text-sm">Mariana López</span>
+                                <span class="text-pink-500 text-xs">Cliente frecuente</span>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-md border border-pink-100 hover:shadow-lg transition-all duration-300">
-                    <div class="flex gap-1 mb-4">
-                        <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                    </div>
-                    <p class="text-pink-700 text-sm leading-relaxed mb-5 italic">"El lugar es un oasis de paz. Me hice depilación definitiva y fue totalmente indoloro. ¡Súper recomendable!"</p>
-                    <div class="flex items-center gap-3">
-                        <div class="w-11 h-11 rounded-full bg-gradient-to-br from-pink-200 to-pink-100"></div>
-                        <div>
-                            <span class="font-semibold text-pink-800 block text-sm">Carolina Ruiz</span>
-                            <span class="text-pink-500 text-xs">Tratamiento láser</span>
+                    <!-- Card 2 -->
+                    <div class="testimonial-card bg-white rounded-3xl p-6 sm:p-8 shadow-xl shadow-pink-100/30 border border-pink-100/50 hover:shadow-2xl hover:border-pink-200/50 transition-all duration-300">
+                        <div class="flex gap-1 mb-4">
+                            <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        </div>
+                        <p class="text-pink-700 text-sm leading-relaxed mb-5 italic">"El lugar es un oasis de paz. Me hice depilación definitiva y fue totalmente indoloro. ¡Súper recomendable!"</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-pink-200 to-pink-100 flex items-center justify-center font-bold text-pink-700 text-xs shadow-inner">CR</div>
+                            <div>
+                                <span class="font-semibold text-pink-800 block text-sm">Carolina Ruiz</span>
+                                <span class="text-pink-500 text-xs">Tratamiento láser</span>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-md border border-pink-100 hover:shadow-lg transition-all duration-300">
-                    <div class="flex gap-1 mb-4">
-                        <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <!-- Card 3 -->
+                    <div class="testimonial-card bg-white rounded-3xl p-6 sm:p-8 shadow-xl shadow-pink-100/30 border border-pink-100/50 hover:shadow-2xl hover:border-pink-200/50 transition-all duration-300">
+                        <div class="flex gap-1 mb-4">
+                            <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        </div>
+                        <p class="text-pink-700 text-sm leading-relaxed mb-5 italic">"La limpieza facial es de otro nivel. Salí renovada. Los productos que usan huelen delicioso y son muy suaves."</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-pink-100 to-pink-200 flex items-center justify-center font-bold text-pink-700 text-xs shadow-inner">SM</div>
+                            <div>
+                                <span class="font-semibold text-pink-800 block text-sm">Sofía Méndez</span>
+                                <span class="text-pink-500 text-xs">Limpieza facial</span>
+                            </div>
+                        </div>
                     </div>
-                    <p class="text-pink-700 text-sm leading-relaxed mb-5 italic">"La limpieza facial es de otro nivel. Salí renovada. Los productos que usan huelen delicioso y son muy suaves."</p>
-                    <div class="flex items-center gap-3">
-                        <div class="w-11 h-11 rounded-full bg-gradient-to-br from-pink-100 to-pink-200"></div>
-                        <div>
-                            <span class="font-semibold text-pink-800 block text-sm">Sofía Méndez</span>
-                            <span class="text-pink-500 text-xs">Limpieza facial</span>
+
+                    <!-- Duplicated Card 1 -->
+                    <div class="testimonial-card bg-white rounded-3xl p-6 sm:p-8 shadow-xl shadow-pink-100/30 border border-pink-100/50 hover:shadow-2xl hover:border-pink-200/50 transition-all duration-300">
+                        <div class="flex gap-1 mb-4">
+                            <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        </div>
+                        <p class="text-pink-700 text-sm leading-relaxed mb-5 italic">"Una experiencia increíble. La atención es sumamente profesional y los resultados en mi piel se notaron desde la primera sesión."</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-pink-200 to-pink-100 flex items-center justify-center font-bold text-pink-700 text-xs shadow-inner">ML</div>
+                            <div>
+                                <span class="font-semibold text-pink-800 block text-sm">Mariana López</span>
+                                <span class="text-pink-500 text-xs">Cliente frecuente</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Duplicated Card 2 -->
+                    <div class="testimonial-card bg-white rounded-3xl p-6 sm:p-8 shadow-xl shadow-pink-100/30 border border-pink-100/50 hover:shadow-2xl hover:border-pink-200/50 transition-all duration-300">
+                        <div class="flex gap-1 mb-4">
+                            <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        </div>
+                        <p class="text-pink-700 text-sm leading-relaxed mb-5 italic">"El lugar es un oasis de paz. Me hice depilación definitiva y fue totalmente indoloro. ¡Súper recomendable!"</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-pink-200 to-pink-100 flex items-center justify-center font-bold text-pink-700 text-xs shadow-inner">CR</div>
+                            <div>
+                                <span class="font-semibold text-pink-800 block text-sm">Carolina Ruiz</span>
+                                <span class="text-pink-500 text-xs">Tratamiento láser</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Duplicated Card 3 -->
+                    <div class="testimonial-card bg-white rounded-3xl p-6 sm:p-8 shadow-xl shadow-pink-100/30 border border-pink-100/50 hover:shadow-2xl hover:border-pink-200/50 transition-all duration-300">
+                        <div class="flex gap-1 mb-4">
+                            <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        </div>
+                        <p class="text-pink-700 text-sm leading-relaxed mb-5 italic">"La limpieza facial es de otro nivel. Salí renovada. Los productos que usan huelen delicioso y son muy suaves."</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-pink-100 to-pink-200 flex items-center justify-center font-bold text-pink-700 text-xs shadow-inner">SM</div>
+                            <div>
+                                <span class="font-semibold text-pink-800 block text-sm">Sofía Méndez</span>
+                                <span class="text-pink-500 text-xs">Limpieza facial</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- CTA Full-width with video -->
+    </section>    <!-- CTA Full-width with video -->
     <section class="relative overflow-hidden py-24 sm:py-32">
         <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover" poster="public/img/galeria/cta-poster.jpg">
             <source src="public/video/video-CTA.mp4" type="video/mp4">
@@ -2695,6 +2818,39 @@
             document.addEventListener('touchstart', forceStartVideos);
             document.addEventListener('scroll', forceStartVideos);
         }
+
+        // Initialize Lenis Smooth Scroll
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            smoothWheel: true,
+            smoothTouch: false
+        });
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+
+        requestAnimationFrame(raf);
+
+        // Smooth scroll to anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                const target = document.querySelector(targetId);
+                if (target) {
+                    e.preventDefault();
+                    // If mobile menu is open, we can close it
+                    const mobileMenu = document.getElementById('mobileMenu');
+                    if (mobileMenu && mobileMenu.classList.contains('active')) {
+                        mobileMenu.classList.remove('active');
+                    }
+                    lenis.scrollTo(target, { offset: -70 });
+                }
+            });
+        });
     </script>
 </body>
 </html>
