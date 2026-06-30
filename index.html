@@ -339,7 +339,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            border: 2px solid rgba(255, 133, 161, 0.5);
+            border: none;
             pointer-events: none;
             z-index: 2;
         }
@@ -2696,9 +2696,77 @@
             indicator.style.width = `${btnRect.width}px`;
             indicator.style.left = `${btnRect.left - containerRect.left + container.scrollLeft}px`;
         }
+
+        function filterGallery(filter, isInitialLoad = false) {
+            const items = document.querySelectorAll('.masonry-item');
+            const limit = (window.innerWidth < 640) ? (filter === 'all' ? 10 : 6) : Infinity;
+
+            if (isInitialLoad) {
+                let shownCount = 0;
+                items.forEach(item => {
+                    const isMatch = (filter === 'all' || item.dataset.category === filter);
+                    if (isMatch && shownCount < limit) {
+                        item.classList.remove('hidden-gallery');
+                        shownCount++;
+                    } else {
+                        item.classList.add('hidden-gallery');
+                    }
+                });
+                return;
+            }
+
+            // 1. Fade out all items instantly
+            items.forEach(item => {
+                item.classList.add('fade-out');
+                item.classList.remove('revealed');
+            });
+            
+            // 2. Wait for fade-out to finish (matching our CSS transition-duration: 0.25s)
+            setTimeout(() => {
+                let shownCount = 0;
+                items.forEach(item => {
+                    const isMatch = (filter === 'all' || item.dataset.category === filter);
+                    if (isMatch && shownCount < limit) {
+                        item.classList.remove('hidden-gallery');
+                        shownCount++;
+                    } else {
+                        item.classList.add('hidden-gallery');
+                    }
+                });
+                
+                // Force browser reflow to register layout changes before starting entry animation
+                void document.body.offsetWidth;
+                
+                // 3. Staggered fade in (revealed)
+                let revealedCount = 0;
+                items.forEach(item => {
+                    const isMatch = (filter === 'all' || item.dataset.category === filter);
+                    if (isMatch && revealedCount < limit) {
+                        item.classList.remove('fade-out');
+                        item.classList.add('revealed');
+                        revealedCount++;
+                    }
+                });
+            }, 250);
+        }
+
         window.addEventListener('load', () => {
             const activeBtn = document.querySelector('.gallery-filter-btn.active');
             updateGalleryIndicator(activeBtn);
+            const filter = activeBtn ? activeBtn.dataset.filter : 'all';
+            filterGallery(filter, true);
+        });
+
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                const activeBtn = document.querySelector('.gallery-filter-btn.active');
+                if (activeBtn) {
+                    updateGalleryIndicator(activeBtn);
+                    filterGallery(activeBtn.dataset.filter, true);
+                }
+            }, 250);
         });
         
         document.querySelectorAll('.gallery-filter-btn').forEach(btn => {
@@ -2706,39 +2774,7 @@
                 document.querySelectorAll('.gallery-filter-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 updateGalleryIndicator(btn);
-                
-                const filter = btn.dataset.filter;
-                const items = document.querySelectorAll('.masonry-item');
-                
-                // 1. Fade out all items instantly
-                items.forEach(item => {
-                    item.classList.add('fade-out');
-                    item.classList.remove('revealed');
-                });
-                
-                // 2. Wait for fade-out to finish (matching our CSS transition-duration: 0.25s)
-                setTimeout(() => {
-                    items.forEach(item => {
-                        const isMatch = (filter === 'all' || item.dataset.category === filter);
-                        if (isMatch) {
-                            item.classList.remove('hidden-gallery');
-                        } else {
-                            item.classList.add('hidden-gallery');
-                        }
-                    });
-                    
-                    // Force browser reflow to register layout changes before starting entry animation
-                    void document.body.offsetWidth;
-                    
-                    // 3. Staggered fade in (revealed)
-                    items.forEach(item => {
-                        const isMatch = (filter === 'all' || item.dataset.category === filter);
-                        if (isMatch) {
-                            item.classList.remove('fade-out');
-                            item.classList.add('revealed');
-                        }
-                    });
-                }, 250);
+                filterGallery(btn.dataset.filter);
             });
         });
     </script>
