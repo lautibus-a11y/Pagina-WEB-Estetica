@@ -1,4 +1,4 @@
-# Ethereal Beauty - Centro de Estética
+# GS Estetica Integral - Centro de Estética
 
 ## Estructura del Proyecto
 
@@ -89,12 +89,13 @@ vercel --prod
 - **HTML5** - Estructura
 - **Tailwind CSS** (CDN) - Estilos
 - **Google Fonts** - Tipografía (Playfair Display + Poppins)
+- **Aurora Mesh** - Fondos gradientes con efecto mesh
 - **Vanilla JavaScript** - Interactividad
 
 ## Características
 
 - ✨ Diseño responsive (Mobile First)
-- 🎨 Paleta de colores rosa pastel y beige
+- 🎨 Paleta de colores rosa pastel y blanco
 - 📱 Compatible con todos los dispositivos
 - ⚡ Animaciones suaves
 - 💬 Integración con WhatsApp para reservas
@@ -107,4 +108,4 @@ vercel --prod
 
 ---
 
-© 2024 Ethereal Beauty Center
+© 2024 GS Estetica Integral

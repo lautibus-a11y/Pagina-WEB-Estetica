@@ -1,30 +1,18 @@
 # Design System Document: High-End Editorial Beauty & Wellness
 
-## 1. Overview & Creative North Star: "The Ethereal Editorial"
-This design system moves away from the rigid, boxed-in nature of traditional web templates. Our Creative North Star is **The Ethereal Editorial**. Think of the UI not as a website, but as a high-end, tactile lifestyle magazine. 
+## 1. Overview & Creative North Star: "GS Estetica Integral"
+Sitio web profesional para GS Estetica Integral, un centro de estética con enfoque en bienestar y belleza personalizada.
 
-We achieve a "premium" feel through **intentional asymmetry**, **balanced breathing room**, and **tonal layering**. By rejecting harsh lines and standard grids, we create a digital environment that feels as calming and fluid as a spa experience. The interface should feel like it was "composed," not "programmed."
+## 2. Colors: Pastel Pink & White Aurora Mesh
+Paleta suave de rosas pastel sobre base blanca con efecto aurora mesh.
 
----
+### Aurora Mesh Background
+El fondo principal usa un gradiente mesh estático compuesto de múltiples radial-gradients superpuestos en tonos rosados pastel sobre blanco, creando un efecto etéreo y fresco.
 
-## 2. Colors: Tonal Depth & The "No-Line" Rule
-We use a sophisticated palette of warm neutrals and soft roses. The goal is to create a seamless, "liquid" interface.
-
-### The "No-Line" Rule
-**Explicit Instruction:** Designers are prohibited from using 1px solid borders to define sections. Boundaries must be created exclusively through:
-1.  **Background Shifts:** Transitioning from `surface` to `surface-container-low`.
-2.  **Negative Space:** Using comfortable gaps (48px–64px) to separate conceptual blocks.
-3.  **Tonal Transitions:** Subtle shifts in hue to guide the eye.
-
-### Surface Hierarchy & Nesting
-Treat the UI as physical layers of fine vellum paper.
-*   **Base:** `surface` (#fcf9f9) for the primary canvas.
-*   **Nesting:** Place `surface-container-lowest` (#ffffff) cards on top of `surface-container` (#f0eded) sections. This creates a natural "pop" without a single line of CSS border.
-
-### The "Glass & Gradient" Rule
-To avoid a flat, "budget" look:
-*   **Glassmorphism:** Use `surface` at 70% opacity with a `20px` backdrop-blur for floating navigation or overlays.
-*   **Signature Textures:** Use a linear gradient from `primary` (#71585b) to `primary-container` (#f8d7da) at a 135-degree angle for Hero CTAs to add "soul" and dimension.
+### Color Palette
+*   **Primary:** Pastel pinks (`#FFD1DC`, `#FFB7C5`, `#FF9EB5`)
+*   **Base:** White (`#FFFFFF`) and very light pink (`#FFF5F7`)
+*   **Deepest accent:** `#FF85A1`
 
 ---
 
@@ -66,7 +54,7 @@ Traditional shadows are too "tech." We use ambient light.
 
 ### Specialized Components
 *   **Floating WhatsApp:** A `surface-container-lowest` circle with a `primary` icon and a 10% opacity `primary` shadow. Positioned with `24px` padding from the viewport edge.
-*   **The "Ethereal" Loader:** A soft fading transition between pages rather than a spinning wheel, maintaining the spa's "flow."
+*   **The "GS" Loader:** A soft fading transition between pages rather than a spinning wheel, maintaining the spa's "flow."
 
 ---
 
