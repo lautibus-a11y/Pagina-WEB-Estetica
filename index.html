@@ -274,19 +274,42 @@
             flex-shrink: 0;
         }
 
-        /* Gallery Flex Grid */
+        /* Gallery CSS Grid (Fixed Heights, Zero Gaps, Clean Alignment) */
         .masonry-grid {
-            display: flex;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
             gap: 0;
+            width: 100%;
+        }
+        @media (min-width: 640px) {
+            .masonry-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        @media (min-width: 1024px) {
+            .masonry-grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
         }
         .masonry-item {
-            flex: 1 1 50%;
-            height: 250px;
-            border-radius: 0;
             overflow: hidden;
             position: relative;
             cursor: pointer;
+            width: 100%;
+            height: 200px; /* Mobile height */
+            display: block;
+            margin: 0;
+            padding: 0;
+        }
+        @media (min-width: 640px) {
+            .masonry-item {
+                height: 240px; /* Tablet height */
+            }
+        }
+        @media (min-width: 1024px) {
+            .masonry-item {
+                height: 285px; /* Desktop height */
+            }
         }
         .masonry-item img {
             width: 100%;
@@ -346,18 +369,7 @@
             transition-delay: 0s !important;
         }
 
-        @media (min-width: 768px) {
-            .masonry-item {
-                flex: 1 1 33.333%;
-                height: 300px;
-            }
-        }
-        @media (min-width: 1024px) {
-            .masonry-item {
-                flex: 1 1 20%;
-                height: 350px;
-            }
-        }
+
 
         /* Gallery Filter Tabs */
         .gallery-filters-container {
@@ -778,21 +790,22 @@
         /* Progress Bars */
         .progress-bar {
             width: 100%;
-            height: 6px;
-            background: #FFE4EC;
-            border-radius: 3px;
+            height: 8px;
+            background: #FFF0F3;
+            border-radius: 9999px;
             overflow: hidden;
+            border: 1px solid rgba(255, 183, 197, 0.25);
         }
         .progress-bar-fill {
             height: 100%;
-            border-radius: 3px;
-            background: linear-gradient(90deg, #FFB7C5, #FF85A1);
-            animation: progressAnim 1.2s ease forwards;
-            transform-origin: left;
+            border-radius: 9999px;
+            background: linear-gradient(90deg, #FFB7C5, #FF6B8B);
+            width: 0%;
+            transition: width 1.8s cubic-bezier(0.15, 0.85, 0.25, 1) !important;
+            box-shadow: 0 0 8px rgba(255, 107, 139, 0.3);
         }
-        @keyframes progressAnim {
-            from { transform: scaleX(0); }
-            to { transform: scaleX(var(--progress)); }
+        .progress-bar-fill.sr-visible {
+            width: var(--progress) !important;
         }
 
         /* About Carousel */
@@ -989,33 +1002,93 @@
             transform: translate(0) scale(1);
         }
     
-        /* Preloader Ken Burns */
+        /* Preloader Ken Burns (More Fluid & Premium) */
         @keyframes kenBurnsPreloader {
             0% {
-                transform: scale(0.92);
-                filter: brightness(0.85) blur(4px);
+                transform: scale(0.94);
+                filter: blur(3px) brightness(0.9);
                 opacity: 0;
             }
-            20% {
+            25% {
                 opacity: 1;
-                filter: brightness(1) blur(0px);
+                filter: blur(1px) brightness(1.0);
             }
             100% {
-                transform: scale(1.18);
-                filter: brightness(1.05);
+                transform: scale(1.12);
+                filter: blur(0px) brightness(1.05);
                 opacity: 1;
             }
         }
         .animate-ken-burns {
-            animation: kenBurnsPreloader 3.8s cubic-bezier(0.1, 0.8, 0.2, 1) forwards;
+            animation: kenBurnsPreloader 4.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
             will-change: transform, opacity, filter;
+        }
+
+        /* Rose Petals Floating System (GPU Hardware Accelerated) */
+        .petal {
+            position: absolute;
+            border-radius: 150% 0 150% 150%; /* Petal shape */
+            opacity: 0;
+            pointer-events: none;
+            z-index: 1;
+            transform-origin: center;
+            will-change: transform, opacity;
+        }
+        @keyframes floatPetal {
+            0% {
+                transform: translate3d(0, 110vh, 0) rotate(0deg) scale(0.6);
+                opacity: 0;
+            }
+            15% {
+                opacity: 0.85;
+            }
+            50% {
+                transform: translate3d(25px, 50vh, 0) rotate(180deg) scale(0.9);
+            }
+            85% {
+                opacity: 0.85;
+            }
+            100% {
+                transform: translate3d(-20px, -10vh, 0) rotate(360deg) scale(1.1);
+                opacity: 0;
+            }
         }
     </style>
 </head>
 <body class="min-h-screen bg-pink-50">
     <!-- Preloader -->
     <div id="cinematic-preloader" class="fixed inset-0 z-[9999] flex items-center justify-center bg-gradient-to-br from-white via-pink-50 to-pink-100 transition-opacity duration-1000 ease-in-out">
-        <div class="flex flex-col items-center justify-center animate-ken-burns">
+        <!-- Floating Rose Petals Container -->
+        <div id="petal-container" class="absolute inset-0 overflow-hidden pointer-events-none z-0"></div>
+        <script>
+            (function() {
+                const container = document.getElementById('petal-container');
+                if (container) {
+                    const count = 26;
+                    const colors = [
+                        'linear-gradient(135deg, #FFF0F3, #FFB7C5)',
+                        'linear-gradient(135deg, #FFCCD5, #FF85A1)',
+                        'linear-gradient(135deg, #FFA6C9, #D44E6E)',
+                        'linear-gradient(135deg, #FFB7C5, #F26A8A)'
+                    ];
+                    const frag = document.createDocumentFragment();
+                    for (let i = 0; i < count; i++) {
+                        const p = document.createElement('div');
+                        p.className = 'petal';
+                        const size = Math.random() * 15 + 10;
+                        p.style.width = size + 'px';
+                        p.style.height = size + 'px';
+                        p.style.left = (Math.random() * 100) + '%';
+                        p.style.background = colors[Math.floor(Math.random() * colors.length)];
+                        p.style.animation = 'floatPetal ' + (Math.random() * 3.5 + 4.5) + 's linear ' + (Math.random() * 4) + 's infinite';
+                        frag.appendChild(p);
+                    }
+                    container.appendChild(frag);
+                }
+            })();
+        </script>
+        
+        <div class="relative z-10 flex flex-col items-center justify-center animate-ken-burns">
             <div class="relative overflow-hidden w-28 h-28 sm:w-36 sm:h-36 shadow-2xl shadow-pink-200/50 rounded-full border-[6px] border-white">
                 <img src="public/img/Favicon.webp" alt="GS Estetica Integral Logo" class="w-full h-full object-cover">
             </div>
@@ -1034,12 +1107,12 @@
             
             <!-- Desktop Nav -->
             <div class="hidden lg:flex items-center gap-6">
-                <a class="nav-link text-xs font-bold text-pink-900 hover:text-pink-600 transition-colors" href="#services">Servicios</a>
-                <a class="nav-link text-xs font-bold text-pink-900 hover:text-pink-600 transition-colors" href="#promotions">Ofertas</a>
-                <a class="nav-link text-xs font-bold text-pink-900 hover:text-pink-600 transition-colors" href="#gallery">Galería</a>
-                <a class="nav-link text-xs font-bold text-pink-900 hover:text-pink-600 transition-colors" href="#team">Equipo</a>
-                <a class="nav-link text-xs font-bold text-pink-900 hover:text-pink-600 transition-colors" href="#about">Nosotros</a>
-                <a class="nav-link text-xs font-bold text-pink-900 hover:text-pink-600 transition-colors" href="#contact">Contacto</a>
+                <a class="nav-link text-xs font-bold text-white hover:text-pink-200 transition-colors" href="#services">Servicios</a>
+                <a class="nav-link text-xs font-bold text-white hover:text-pink-200 transition-colors" href="#promotions">Ofertas</a>
+                <a class="nav-link text-xs font-bold text-white hover:text-pink-200 transition-colors" href="#gallery">Galería</a>
+                <a class="nav-link text-xs font-bold text-white hover:text-pink-200 transition-colors" href="#team">Equipo</a>
+                <a class="nav-link text-xs font-bold text-white hover:text-pink-200 transition-colors" href="#about">Nosotros</a>
+                <a class="nav-link text-xs font-bold text-white hover:text-pink-200 transition-colors" href="#contact">Contacto</a>
                 <a href="#booking" class="ml-4 px-5 py-2 rounded-lg text-xs font-medium text-white/90 border border-white/30 backdrop-blur-md bg-white/10 hover:bg-white/20 hover:border-white/50 transition-all">
                     Reservar
                 </a>
@@ -1362,7 +1435,7 @@
                 <img src="public/img/servicios/placeholder-1.jpg" alt="Aromaterapia" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1600612253971-422e7f7faeb6?w=600&q=80'" onclick="openGalleryModal(this.src)" loading="lazy">
             </div>
             <div class="masonry-item gallery-reveal" data-category="estetica" style="--delay: 0.25s;">
-                <img src="public/img/servicios/placeholder-2.jpg" alt="Velas spa" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1602872030214-6f8a6b7f1c7e?w=600&q=80'" onclick="openGalleryModal(this.src)" loading="lazy">
+                <img src="public/img/servicios/placeholder-2.jpg" alt="Velas spa" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1603006905003-be475563bc59?w=600&q=80'" onclick="openGalleryModal(this.src)" loading="lazy">
             </div>
         </div>
     </section>
@@ -1514,7 +1587,7 @@
             display: flex;
             gap: 1.5rem;
             width: max-content;
-            animation: testimonialScroll 45s linear infinite;
+            animation: testimonialScroll 32s linear infinite;
         }
         .testimonial-track:hover {
             animation-play-state: paused;
@@ -1534,15 +1607,18 @@
         }
     </style>
     <section class="py-20 sm:py-28 lg:py-32 bg-pink-50/30 overflow-hidden">
-        <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
-            <div class="text-center mb-12">
+        <!-- Padded Container for Title -->
+        <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 mb-12">
+            <div class="text-center">
                 <span class="block text-pink-500 uppercase tracking-widest text-xs font-semibold mb-2">Reseñas</span>
                 <h2 class="headline-animated headline-wavy font-serif text-4xl sm:text-5xl lg:text-6xl tracking-tight text-pink-900 mb-3">
                     Lo que dicen nuestras clientas
                 </h2>
             </div>
+        </div>
 
-            <div class="testimonial-scroll-container">
+        <!-- Full width container for marquee slider -->
+        <div class="testimonial-scroll-container">
                 <div class="testimonial-track">
                     <!-- Card 1 -->
                     <div class="testimonial-card bg-white rounded-3xl p-6 sm:p-8 shadow-xl shadow-pink-100/30 border border-pink-100/50 hover:shadow-2xl hover:border-pink-200/50 transition-all duration-300">
@@ -1659,7 +1735,6 @@
                     </div>
                 </div>
             </div>
-        </div>
     </section>    <!-- CTA Full-width with video -->
     <section class="relative overflow-hidden py-24 sm:py-32">
         <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover" poster="public/img/galeria/cta-poster.jpg">
@@ -1687,36 +1762,42 @@
     </section>
 
     <!-- About Section -->
-    <section class="py-20 sm:py-28 lg:py-32 bg-white" id="about">
+    <section class="py-20 sm:py-28 lg:py-32 bg-transparent" id="about">
         <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
-            <div class="text-center lg:text-center mb-12 lg:mb-20">
+            <div class="text-center mb-12 lg:mb-16">
                 <div class="inline-block mb-4 px-4 py-1.5 rounded-full bg-pink-50 border border-pink-100">
                     <span class="text-xs font-semibold tracking-widest uppercase text-pink-500">Sobre Nosotras</span>
                 </div>
                 <h2 class="headline-animated headline-dots font-serif text-4xl sm:text-5xl lg:text-6xl tracking-tight text-pink-900 mb-6 leading-tight">
-                        Profesionalismo y confianza en cada toque
+                    Profesionalismo y confianza en cada toque
                 </h2>
             </div>
+            
             <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                <!-- Left Editorial Images -->
                 <div class="relative order-2 lg:order-1">
-                    <div class="absolute -top-5 -left-5 w-32 h-32 bg-pink-100 rounded-full opacity-60 z-0"></div>
-                    <div class="absolute -bottom-5 -right-5 w-24 h-24 bg-pink-100 rounded-full opacity-60 z-0"></div>
-                    <div class="about-carousel relative z-10 overflow-hidden rounded-3xl shadow-2xl shadow-pink-200/50 border-[6px] border-white/80 backdrop-blur-sm">
+                    <div class="absolute -top-6 -left-6 w-36 h-36 bg-pink-100/60 rounded-full filter blur-xl z-0"></div>
+                    <div class="absolute -bottom-6 -right-6 w-28 h-28 bg-pink-200/40 rounded-full filter blur-xl z-0"></div>
+                    
+                    <!-- Decorative Golden/Rose Frame -->
+                    <div class="absolute inset-0 border border-pink-200/40 rounded-3xl translate-x-3 translate-y-3 z-0 pointer-events-none"></div>
+                    
+                    <div class="about-carousel relative z-10 overflow-hidden rounded-3xl shadow-2xl border-[6px] border-white backdrop-blur-sm">
                         <div class="about-carousel-track" id="aboutCarouselTrack">
                             <div class="about-carousel-slide">
-                                <img src="public/img/nostras/about.jpg" alt="Equipo GS Estetica Integral" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1556760544-74068565f05c?w=800&q=80'"/ loading="lazy">
+                                <img src="public/img/nostras/about.jpg" alt="Equipo GS Estetica Integral" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1556760544-74068565f05c?w=800&q=80'" loading="lazy">
                             </div>
                             <div class="about-carousel-slide">
-                                <img src="public/img/galeria/gallery-1.jpg" alt="Tratamiento facial" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=800&q=80'"/ loading="lazy">
+                                <img src="public/img/galeria/gallery-1.jpg" alt="Tratamiento facial" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=800&q=80'" loading="lazy">
                             </div>
                             <div class="about-carousel-slide">
-                                <img src="public/img/galeria/gallery-2.jpg" alt="Ambiente spa" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=800&q=80'"/ loading="lazy">
+                                <img src="public/img/galeria/gallery-2.jpg" alt="Ambiente spa" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=800&q=80'" loading="lazy">
                             </div>
                             <div class="about-carousel-slide">
-                                <img src="public/img/galeria/gallery-3.jpg" alt="Productos orgánicos" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=800&q=80'"/ loading="lazy">
+                                <img src="public/img/galeria/gallery-3.jpg" alt="Productos orgánicos" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=800&q=80'" loading="lazy">
                             </div>
                             <div class="about-carousel-slide">
-                                <img src="public/img/galeria/gallery-4.jpg" alt="Masaje relajante" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800&q=80'"/ loading="lazy">
+                                <img src="public/img/galeria/gallery-4.jpg" alt="Masaje relajante" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800&q=80'" loading="lazy">
                             </div>
                         </div>
                         <div class="flex justify-center gap-2 mt-4" id="aboutCarouselDots">
@@ -1728,50 +1809,58 @@
                         </div>
                     </div>
                 </div>
-                <div class="text-center lg:text-left order-1 lg:order-2">
-                    <p class="text-pink-700/80 text-sm sm:text-base leading-relaxed mb-8">
-                        En GS Estetica Integral, creemos que la belleza es un reflejo de la salud interior. Con más de 10 años de experiencia, nuestro equipo de esteticistas certificadas trabaja con el compromiso de brindar resultados reales y naturales.
+                
+                <!-- Right Text Editorial Content -->
+                <div class="text-center lg:text-left order-1 lg:order-2 flex flex-col justify-center">
+                    <p class="font-serif italic text-lg sm:text-xl lg:text-2xl text-pink-800 leading-relaxed mb-6 font-medium">
+                        "Creemos que la belleza real nace del cuidado, el respeto y la armonía con una misma."
                     </p>
-                    <!-- Progress Bars -->
-                    <div class="space-y-4 mb-8">
+                    <p class="text-pink-700/80 text-sm sm:text-base leading-relaxed mb-8">
+                        En GS Estética Integral, con más de 10 años de trayectoria, combinamos aparatología certificada y el toque experto de nuestras esteticistas para regalarte una experiencia de renovación absoluta en un entorno diseñado para tu paz.
+                    </p>
+                    
+                    <!-- Progress Bars (Interactive Scroll View) -->
+                    <div class="space-y-5 mb-8 max-w-md mx-auto lg:mx-0 w-full">
                         <div>
-                            <div class="flex justify-between text-sm text-pink-700 mb-1.5">
-                                <span>Experiencia</span>
-                                <span class="font-semibold text-pink-600">10+ años</span>
+                            <div class="flex justify-between text-xs sm:text-sm text-pink-900 mb-1.5">
+                                <span class="font-medium">Experiencia Profesional</span>
+                                <span class="font-bold text-pink-700">10+ años</span>
                             </div>
                             <div class="progress-bar">
-                                <div class="progress-bar-fill animate" style="--progress: 100%;"></div>
+                                <div class="progress-bar-fill sr-item" style="--progress: 100%;"></div>
                             </div>
                         </div>
                         <div>
-                            <div class="flex justify-between text-sm text-pink-700 mb-1.5">
-                                <span>Clientas satisfechas</span>
-                                <span class="font-semibold text-pink-600">98%</span>
+                            <div class="flex justify-between text-xs sm:text-sm text-pink-900 mb-1.5">
+                                <span class="font-medium">Satisfacción de Nuestras Clientas</span>
+                                <span class="font-bold text-pink-700">98%</span>
                             </div>
                             <div class="progress-bar">
-                                <div class="progress-bar-fill animate" style="--progress: 98%;"></div>
+                                <div class="progress-bar-fill sr-item" style="--progress: 98%;"></div>
                             </div>
                         </div>
                         <div>
-                            <div class="flex justify-between text-sm text-pink-700 mb-1.5">
-                                <span>Tecnología certificada</span>
-                                <span class="font-semibold text-pink-600">100%</span>
+                            <div class="flex justify-between text-xs sm:text-sm text-pink-900 mb-1.5">
+                                <span class="font-medium">Tecnología de Vanguardia Certificada</span>
+                                <span class="font-bold text-pink-700">100%</span>
                             </div>
                             <div class="progress-bar">
-                                <div class="progress-bar-fill animate" style="--progress: 100%;"></div>
+                                <div class="progress-bar-fill sr-item" style="--progress: 100%;"></div>
                             </div>
                         </div>
                         <div>
-                            <div class="flex justify-between text-sm text-pink-700 mb-1.5">
-                                <span>Productos orgánicos</span>
-                                <span class="font-semibold text-pink-600">100%</span>
+                            <div class="flex justify-between text-xs sm:text-sm text-pink-900 mb-1.5">
+                                <span class="font-medium">Productos Orgánicos y Veganos</span>
+                                <span class="font-bold text-pink-700">100%</span>
                             </div>
                             <div class="progress-bar">
-                                <div class="progress-bar-fill animate" style="--progress: 100%;"></div>
+                                <div class="progress-bar-fill sr-item" style="--progress: 100%;"></div>
                             </div>
                         </div>
                     </div>
-                    <div class="social-inline">
+                    
+                    <!-- Social Media Links (Centered on Mobile) -->
+                    <div class="social-inline justify-center lg:justify-start">
                         <a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram">
                             <svg fill="currentColor" viewBox="0 0 24 24" class="text-pink-600">
                                 <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
@@ -1791,9 +1880,7 @@
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- Booking Form -->
+    </section>    <!-- Booking Form -->
     <section class="py-20 sm:py-28 lg:py-32" id="booking">
         <div class="max-w-4xl mx-auto px-5 sm:px-6 lg:px-10">
             <div class="form-card">
@@ -2216,7 +2303,7 @@
                             <img src="public/img/galeria/gallery-4.jpg" alt="Masaje relajante" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=600&q=80'"/ loading="lazy">
                         </div>
                         <div class="modal-carousel-slide">
-                            <img src="public/img/servicios/placeholder-2.jpg" alt="Velas spa" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1602872030214-6f8a6b7f1c7e?w=600&q=80'"/ loading="lazy">
+                            <img src="public/img/servicios/placeholder-2.jpg" alt="Velas spa" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1603006905003-be475563bc59?w=600&q=80'"/ loading="lazy">
                         </div>
                         <div class="modal-carousel-slide">
                             <img src="public/img/servicios/placeholder-6.jpg" alt="Piedras calientes" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&q=80'"/ loading="lazy">
@@ -2754,8 +2841,8 @@
     </script>
 
     <script>
-        // Preloader Logic
-        window.addEventListener('load', () => {
+        // Preloader Logic (Fades out smoothly after safe countdown)
+        document.addEventListener('DOMContentLoaded', () => {
             const preloader = document.getElementById('cinematic-preloader');
             if (preloader) {
                 setTimeout(() => {
@@ -2763,7 +2850,7 @@
                     setTimeout(() => {
                         preloader.style.display = 'none';
                     }, 1000);
-                }, 2400);
+                }, 2600); // 2.6s cinematic presentation time
             }
         });
 
