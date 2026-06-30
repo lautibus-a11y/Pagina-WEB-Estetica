@@ -1020,8 +1020,8 @@
     <!-- Hero Section -->
     <section class="relative min-h-screen flex items-center overflow-hidden">
         <div class="absolute inset-0 z-0">
-            <video id="heroVideo1" src="public/video/viodeo-hero-1.mp4" class="w-full h-full object-cover hero-video absolute inset-0 z-0 transition-opacity duration-1000 opacity-100" autoplay muted playsinline poster="public/img/galeria/hero.jpg"></video>
-            <video id="heroVideo2" src="public/video/videohero-2.mp4" class="w-full h-full object-cover hero-video absolute inset-0 z-0 transition-opacity duration-1000 opacity-0" muted playsinline></video>
+            <video id="heroVideo1" src="public/video/viodeo-hero-1.mp4" class="w-full h-full object-cover hero-video absolute inset-0 z-0 transition-opacity duration-1000 opacity-100" autoplay muted playsinline preload="auto" poster="public/img/galeria/hero.jpg"></video>
+            <video id="heroVideo2" src="public/video/videohero-2.mp4" class="w-full h-full object-cover hero-video absolute inset-0 z-0 transition-opacity duration-1000 opacity-0" muted playsinline preload="auto"></video>
             <div class="absolute inset-0 bg-black/30 z-10"></div>
         </div>
         <div class="relative z-10 w-full max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-28 sm:py-32 lg:py-36">
@@ -2604,6 +2604,58 @@
                 }, 1800);
             }
         });
+
+        // Hero Video Loop Logic (Crossfade)
+        const v1 = document.getElementById('heroVideo1');
+        const v2 = document.getElementById('heroVideo2');
+        if (v1 && v2) {
+            v1.addEventListener('ended', () => {
+                v2.play().then(() => {
+                    v2.classList.remove('opacity-0');
+                    v2.classList.add('opacity-100');
+                    v1.classList.remove('opacity-100');
+                    v1.classList.add('opacity-0');
+                    setTimeout(() => {
+                        v1.pause();
+                        v1.currentTime = 0;
+                    }, 1000);
+                }).catch(err => {
+                    console.log("Playback failed for video 2, looping video 1:", err);
+                    v1.currentTime = 0;
+                    v1.play().catch(e => console.log(e));
+                });
+            });
+
+            v2.addEventListener('ended', () => {
+                v1.play().then(() => {
+                    v1.classList.remove('opacity-0');
+                    v1.classList.add('opacity-100');
+                    v2.classList.remove('opacity-100');
+                    v2.classList.add('opacity-0');
+                    setTimeout(() => {
+                        v2.pause();
+                        v2.currentTime = 0;
+                    }, 1000);
+                }).catch(err => {
+                    console.log("Playback failed for video 1, looping video 2:", err);
+                    v2.currentTime = 0;
+                    v2.play().catch(e => console.log(e));
+                });
+            });
+
+            // Autoplay Safeguard: Resume playback on first user gesture if blocked by browser
+            const forceStartVideos = () => {
+                if (v1.paused && v1.currentTime === 0) {
+                    v1.play().catch(err => console.log("Failed to force start v1:", err));
+                }
+                document.removeEventListener('click', forceStartVideos);
+                document.removeEventListener('touchstart', forceStartVideos);
+                document.removeEventListener('scroll', forceStartVideos);
+            };
+            document.addEventListener('click', forceStartVideos);
+            document.addEventListener('touchstart', forceStartVideos);
+            document.addEventListener('scroll', forceStartVideos);
+        }
     </script>
 </body>
 </html>
